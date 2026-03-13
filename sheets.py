@@ -12,10 +12,10 @@ class Sheets:
         thread = threading.Thread(target=self._autoupdate_links)
         thread.start()
     def get_all_links(self):
-        sheet = self.gc.open("links").sheet1
-
-        self.links = sheet.col_values(2)[1:]
-    def get_random_three(self, used_links=None):
+        sheet = self.gc.open("links")
+        second_sheet = sheet.get_worksheet(1)
+        self.links = second_sheet.col_values(2)[1:]
+    def get_random_link(self, used_links=None):
         if used_links is None:
             used_links = set()
         else:
@@ -27,8 +27,8 @@ class Sheets:
             return []
 
 
-        k = min(3, len(available))
-        return random.sample(available, k)
+
+        return random.choice(available)
     def _autoupdate_links(self):
         while True:
             print("Обновляю ссылки...")
