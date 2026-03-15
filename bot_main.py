@@ -9,7 +9,7 @@ db = UserDB()
 sh = Sheets()
 bot = telebot.TeleBot(BOT_TOKEN)
 @bot.message_handler(commands=['start'])
-def send_welcome(message):
+def send_welcome(message, remove_kb=False):
     user_id = message.from_user.id
     chat_id = message.chat.id
     msg = ("🔗Перейдите по этим ссылкам и проставьте оценки 4-5 звезд🔗\n\n"
@@ -24,7 +24,9 @@ def send_welcome(message):
     if not db.can_do_task(user_id):
         msg = ("⏱️Новое задание пока недоступно, с момента выполнения прошлого прошло менее чем 24 часа.\n\n"
                "☝️Нужно будет заново зайти через сайт ависо, иначе вы не сможете получить оплату.")
-        bot.send_message(chat_id, msg)
+        if not remove_kb:
+            k.add(InlineKeyboardButton("Получить задание", callback_data="start"))
+        bot.send_message(chat_id, msg, reply_markup=k, parse_mode="HTML")
         return
     link = sh.get_random_link(db.get_used_links())
     if not link:
@@ -38,3 +40,11 @@ def send_welcome(message):
 
     db.add_used_link(link, user_id)
     return
+
+@bot.callback_query_handler(func=lambda call: call.data == "start")
+def handle_start(call):
+    send_welcome(call.message, True)
+    bot.answer_callback_query(call.id)
+
+
+
