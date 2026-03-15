@@ -1,6 +1,6 @@
 
 import sqlite3
-import random
+
 from datetime import datetime, timedelta
 
 class UserDB:

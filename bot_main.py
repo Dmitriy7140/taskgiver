@@ -1,4 +1,5 @@
-from config import BOT_TOKEN
+from config import BOT_TOKEN, PHONE_NUMBERS
+import random
 import telebot
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 from sheets import Sheets
@@ -13,6 +14,8 @@ def send_welcome(message):
     chat_id = message.chat.id
     msg = ("🔗Перейдите по этим ссылкам и проставьте оценки 4-5 звезд🔗\n\n"
            "🖼Отчет в виде скринов загрузите в Aviso🖼\n\n"
+           ""
+           f"<b>НОМЕР ТЕЛЕФОНА:</b> {random.choice(PHONE_NUMBERS)}"
            ""
            "⏱️Задание доступно раз в 24 часа.\n\n"
            "☝️(Необходимо будет заново зайти через сайт ависо, иначе вы не сможете получить оплату)"
@@ -31,7 +34,7 @@ def send_welcome(message):
 
 
     k.add(InlineKeyboardButton(f"Ссылка", url=link))
-    bot.send_message(chat_id, msg, reply_markup=k)
+    bot.send_message(chat_id, msg, reply_markup=k, parse_mode="HTML")
 
     db.add_used_link(link, user_id)
     return

@@ -2,12 +2,13 @@ from dotenv import load_dotenv
 import os
 
 
-TEST_MODE = True #basically, local used only
+
 dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
 if dotenv_path:
     load_dotenv(dotenv_path)
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
+PHONE_NUMBERS = [i for i in os.getenv("PHONE_NUMBERS").split(",")]
 
 
 if not BOT_TOKEN:
