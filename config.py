@@ -9,7 +9,9 @@ if dotenv_path:
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 PHONE_NUMBERS = [i for i in os.getenv("PHONE_NUMBERS").split(",")]
-
+YAPI_KEY= os.getenv("YAPI_KEY")
+FOLDER_ID=os.getenv("FOLDER_ID")
+MODEL_URL=os.getenv("MODEL_URL")
 
 if not BOT_TOKEN:
     raise ValueError("Bot Token is required.")

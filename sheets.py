@@ -13,8 +13,8 @@ class Sheets:
         thread.start()
     def get_all_links(self):
         sheet = self.gc.open("links")
-        second_sheet = sheet.get_worksheet(1)
-        self.links = second_sheet.col_values(2)[1:]
+        second_sheet = sheet.get_worksheet(2)
+        self.links = second_sheet.col_values(1)
     def get_random_link(self, used_links=None):
         if used_links is None:
             used_links = set()

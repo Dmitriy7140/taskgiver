@@ -2,3 +2,4 @@ telebot
 dotenv
 gspread
 pytest
+yandex-ai-studio-sdk
