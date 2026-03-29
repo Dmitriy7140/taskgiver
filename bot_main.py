@@ -6,7 +6,7 @@ from sheets import Sheets
 from database_main import UserDB
 from reviews import generate_review
 
-prompts =["Напиши краткий отзыв о том, какая хорошая компания 2Change. Они обменивают валюты и продают eSim. Вставь эмодзи", "Восхваляй менеджера Александру из компании 2change"]
+prompts =["Напиши краткий отзыв о том, какая хорошая компания 2Change. Они обменивают валюты и продают eSim. Вставь эмодзи. Объем от 10 до 50 слов"]
 db = UserDB()
 sh = Sheets()
 bot = telebot.TeleBot(BOT_TOKEN)
@@ -16,10 +16,8 @@ def send_welcome(message, remove_kb=False):
     chat_id = message.chat.id
     msg = ("🔗Перейдите по этим ссылкам и проставьте оценки 4-5 звезд🔗\n\n"
            "🖼Отчет в виде скринов загрузите в Aviso🖼\n\n"
-           ""
-           f"<b>НОМЕР ТЕЛЕФОНА:</b> {random.choice(PHONE_NUMBERS)}\n\n"
-           f""
-           f"1) Скопируйте этот текс:\n\n"
+           
+           f"1) Скопируйте этот текст:\n\n"
            f""
            f"<code>{generate_review(random.choice(prompts))}</code>\n\n"
            f""
