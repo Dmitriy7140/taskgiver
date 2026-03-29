@@ -1,4 +1,3 @@
-import sqlite3
 
 import sqlite3
 from datetime import datetime, timedelta
@@ -30,6 +29,7 @@ class UserDB:
             ''')
         self.conn.commit()
 
+
     # ----------------------------
     # Метод 1: обновить last_task на текущее время
     # ----------------------------
@@ -54,12 +54,12 @@ class UserDB:
     # ----------------------------
     # Метод 3: добавить ссылки, выданные пользователю
     # ----------------------------
-    def add_user_links(self, user_id: int, links: list):
-        for link in links:
-            self.cursor.execute(
-                "INSERT OR IGNORE INTO user_links(tg_id, link) VALUES (?, ?)",
-                (user_id, link)
-            )
+    def add_user_links(self, user_id: int, link: str):
+
+        self.cursor.execute(
+            "INSERT OR IGNORE INTO user_links(tg_id, link) VALUES (?, ?)",
+            (user_id, link)
+        )
         self.conn.commit()
 
     # ----------------------------

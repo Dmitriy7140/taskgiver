@@ -21,15 +21,15 @@ def send_welcome(message):
         msg = "Новое задание пока недоступно, с момента выполнения прошлого прошло менее чем 24 часа."
         bot.send_message(chat_id, msg)
         return
-    links = sh.get_random_three(used_links=db.get_user_links(user_id))
-    if not links:
-        msg = "Нет доступных ссылок, повторите попытку позже."
+    link = sh.get_random_link(used_links=db.get_user_links(user_id))
+    if not link:
+        msg = "Для вас доступных ссылок, повторите попытку позже."
         bot.send_message(chat_id, msg)
         return
 
-    for i, link in enumerate(links, start=1):
-        k.add(InlineKeyboardButton(f"Ссылка {i}", url=link))
+
+    k.add(InlineKeyboardButton(f"Ссылка", url=link))
     bot.send_message(chat_id, msg, reply_markup=k)
     db.update_last_task(user_id)
-    db.add_user_links(user_id, links)
+    db.add_user_links(user_id, link)
     return
