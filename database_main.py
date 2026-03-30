@@ -27,7 +27,11 @@ class UserDB:
             )
         ''')
         self.conn.commit()
-
+        self.cursor.execute('''
+        CREATE TABLE IF NOT EXISTS used_reviews (                
+                review TEXT PRIMARY KEY)
+                ''')
+        self.conn.commit()
     # ----------------------------
     # Обновить last_task на текущее время
     # ----------------------------
@@ -74,3 +78,13 @@ class UserDB:
         SELECT link FROM used_links''')
         rows = self.cursor.fetchall()
         return rows
+    def add_used_review(self, review:str):
+        self.cursor.execute('''
+        INSERT OR IGNORE INTO used_reviews(review) VALUES (?)''', review)
+        self.conn.commit()
+        return
+    def get_used_reviews(self) -> list:
+        self.cursor.execute('''SELECT review FROM used_reviews''')
+        rows = self.cursor.fetchall()
+        return rows
+

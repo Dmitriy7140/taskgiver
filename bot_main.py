@@ -4,9 +4,9 @@ import telebot
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 from sheets import Sheets
 from database_main import UserDB
-from reviews import generate_review
+from ai import generate_review
 
-prompts =["Напиши краткий отзыв о том, какая хорошая компания 2Change. Они обменивают валюты и продают eSim. Вставь эмодзи. Объем от 10 до 50 слов"]
+#prompts =["Напиши краткий отзыв о том, какая хорошая компания 2Change. Они обменивают валюты и продают eSim. Вставь эмодзи. Объем от 10 до 50 слов"]
 db = UserDB()
 sh = Sheets()
 bot = telebot.TeleBot(BOT_TOKEN)
@@ -17,11 +17,11 @@ def send_welcome(message, remove_kb=False):
     msg = ("🔗Перейдите по этим ссылкам и проставьте оценки 4-5 звезд🔗\n\n"
            "🖼Отчет в виде скринов загрузите в Aviso🖼\n\n"
            
-           f"1) Скопируйте этот текст:\n\n"
+           f"1) Кликните на этот текст чтобы скопировать:\n\n"
            f""
-           f"<code>{generate_review(random.choice(prompts))}</code>\n\n"
+           f"<code>{sh.get_one_review(db.get_used_reviews())}</code>\n\n"
            f""
-           f"2) Перейдите по ссылке ниже и разместите отзыв с этим текстом"
+           f"2) Перейдите по ссылке ниже и разместите отзыв используя скопированный текст"
            ""
            "⏱️Задание доступно раз в 24 часа.\n\n"
            "☝️(Необходимо будет заново зайти через сайт ависо, иначе вы не сможете получить оплату)"
@@ -51,6 +51,7 @@ def send_welcome(message, remove_kb=False):
 def handle_start(call):
     send_welcome(call.message, True)
     bot.answer_callback_query(call.id)
+
 
 
 
