@@ -1,10 +1,10 @@
 from config import BOT_TOKEN, PHONE_NUMBERS
-import random
+
 import telebot
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 from sheets import Sheets
 from database_main import UserDB
-from ai import generate_review
+
 
 #prompts =["Напиши краткий отзыв о том, какая хорошая компания 2Change. Они обменивают валюты и продают eSim. Вставь эмодзи. Объем от 10 до 50 слов"]
 db = UserDB()
